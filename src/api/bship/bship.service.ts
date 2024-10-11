@@ -24,7 +24,6 @@ export class BshipService {
       return {
         data: {
           message: 'Error',
-          response: err.response,
         },
       };
     }

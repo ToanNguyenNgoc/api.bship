@@ -9,7 +9,7 @@ export class BshipService {
   async create(route: string, createBshipDto: CreateBshipDto) {
     try {
       const response = await axios.post(
-        `${CONST.env.BSHIP_SOCKET_API_URL}/api/user/${route}`,
+        `${process.env.BSHIP_SOCKET_API_URL}/api/user/${route}`,
         createBshipDto,
         {
           headers: {

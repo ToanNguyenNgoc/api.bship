@@ -3,6 +3,7 @@ import { CreateBshipDto } from './dto/create-bship.dto';
 import { UpdateBshipDto } from './dto/update-bship.dto';
 import axios, { AxiosError } from 'axios';
 import { CONST } from 'src/utils';
+import { Request } from 'express';
 
 @Injectable()
 export class BshipService {
@@ -29,8 +30,26 @@ export class BshipService {
     }
   }
 
-  findAll() {
-    return `This action returns all bship`;
+  async findAll(reqHeader: Request, route: string) {
+    try {
+      const response = await axios.get(
+        `${process.env.BSHIP_SOCKET_API_URL}/api/user/${route}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            accept_token: reqHeader.headers['accept_token'],
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const err = error as AxiosError;
+      return {
+        data: {
+          message: 'Error',
+        },
+      };
+    }
   }
 
   findOne(id: number) {

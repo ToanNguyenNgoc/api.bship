@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { BshipService } from './bship.service';
 import { CreateBshipDto } from './dto/create-bship.dto';
 import { UpdateBshipDto } from './dto/update-bship.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { API_TAG } from 'src/swagger/inddex';
+import { Request } from 'express';
 
 @ApiTags(API_TAG.BSHIP)
 @Controller('api/user')
@@ -26,10 +28,10 @@ export class BshipController {
     return this.bshipService.create(route, createBshipDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.bshipService.findAll();
-  // }
+  @Get(':route')
+  findAll(@Req() req: Request, @Param('route') route: string) {
+    return this.bshipService.findAll(req, route);
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

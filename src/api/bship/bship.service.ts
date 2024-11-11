@@ -7,7 +7,11 @@ import { Request } from 'express';
 
 @Injectable()
 export class BshipService {
-  async create(route: string, createBshipDto: CreateBshipDto) {
+  async create(
+    reqHeader: Request,
+    route: string,
+    createBshipDto: CreateBshipDto,
+  ) {
     try {
       const response = await axios.post(
         `${process.env.BSHIP_SOCKET_API_URL}/api/user/${route}`,
@@ -15,7 +19,8 @@ export class BshipService {
         {
           headers: {
             'Content-Type': 'application/json',
-            accept_token: createBshipDto.accessToken,
+            accept_token:
+              createBshipDto.accessToken || reqHeader.headers['accept_token'],
           },
         },
       );

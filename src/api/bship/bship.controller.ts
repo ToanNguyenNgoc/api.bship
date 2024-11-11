@@ -22,10 +22,11 @@ export class BshipController {
 
   @Post(':route')
   create(
+    @Req() req: Request,
     @Param('route') route: string,
     @Body() createBshipDto: CreateBshipDto,
   ) {
-    return this.bshipService.create(route, createBshipDto);
+    return this.bshipService.create(req, route, createBshipDto);
   }
 
   @Get(':route')

@@ -1,16 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Req,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
 import { BshipService } from './bship.service';
 import { CreateBshipDto } from './dto/create-bship.dto';
-import { UpdateBshipDto } from './dto/update-bship.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { API_TAG } from 'src/swagger/inddex';
 import { Request } from 'express';
@@ -26,7 +16,17 @@ export class BshipController {
     @Param('route') route: string,
     @Body() createBshipDto: CreateBshipDto,
   ) {
-    return this.bshipService.create(req, route, createBshipDto);
+    return this.bshipService.create(req, route, null, createBshipDto);
+  }
+
+  @Post(':route/:route_second')
+  createSecond(
+    @Req() req: Request,
+    @Param('route') route: string,
+    @Param('route_second') route_second: string,
+    @Body() createBshipDto: CreateBshipDto,
+  ) {
+    return this.bshipService.create(req, route, route_second, createBshipDto);
   }
 
   @Get(':route')

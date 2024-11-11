@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateBshipDto } from './dto/create-bship.dto';
 import { UpdateBshipDto } from './dto/update-bship.dto';
 import axios, { AxiosError } from 'axios';
-import { CONST } from 'src/utils';
 import { Request } from 'express';
 
 @Injectable()
@@ -10,11 +9,12 @@ export class BshipService {
   async create(
     reqHeader: Request,
     route: string,
+    route_second: string | null,
     createBshipDto: CreateBshipDto,
   ) {
     try {
       const response = await axios.post(
-        `${process.env.BSHIP_SOCKET_API_URL}/api/user/${route}`,
+        `${process.env.BSHIP_SOCKET_API_URL}/api/user/${route}${route_second ? `/${route_second}` : ``}`,
         createBshipDto,
         {
           headers: {
